@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blade & Crown — Premium Barbershop Experience</title>
+  <meta name="description" content="Blade & Crown offers luxury grooming, precision cuts, hot towel shaves, and premium beard styling. Book your throne today."/>
+  <meta name="keywords" content="premium barbershop, luxury haircut, men's grooming, beard styling, hot towel shave, professional barber"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    /* ============================================================
+       BLADE & CROWN — LUXURY BARBERSHOP WEBSITE
+       Color Palette: Brown #3B1F0E | Gold #C9A84C | White #F5F0E8 | Black #0A0A0A
+    ============================================================ */
+
+    :root {
+      --brown:       #3B1F0E;
+      --brown-light: #5C3317;
+      --brown-dark:  #1E0D04;
+      --gold:        #C9A84C;
+      --gold-light:  #E4C675;
+      --gold-dark:   #9A7A2E;
+      --white:       #F5F0E8;
+      --white-pure:  #FFFFFF;
+      --black:       #0A0A0A;
+      --gray:        #1A1A1A;
+      --gray-light:  #2A2A2A;
+      --text-muted:  #8A8A7A;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body:    'Josefin Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── Custom Cursor ── */
+    .cursor {
+      width: 12px; height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, opacity 0.2s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 0.3s;
+      transform: translate(-50%, -50%);
+      opacity: 0.6;
+    }
+    a:hover ~ .cursor, button:hover ~ .cursor { transform: translate(-50%, -50%) scale(2.5); }
+
+    /* ── Loader ── */
+    #loader {
+      position: fixed; inset: 0;
+      background: var(--black);
+      z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.8s ease, visibility 0.8s;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-logo {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      animation: pulse-gold 1.5s ease-in-out infinite;
+    }
+    .loader-bar {
+      width: 200px; height: 1px;
+      background: var(--gray-light);
+      margin-top: 2rem;
+      overflow: hidden;
+    }
+    .loader-bar-fill {
+      height: 100%;
+      background: var(--gold);
+      animation: loadFill 1.8s ease forwards;
+    }
+    @keyframes loadFill { from { width: 0; } to { width: 100%; } }
+    @keyframes pulse-gold {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.5rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, border-bottom 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 5vw;
+      border-bottom-color: rgba(201,168,76,0.15);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .nav-logo span { color: var(--white); font-weight: 300; font-style: italic; }
+    .nav-links {
+      display: flex; gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      position: relative;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      padding: 0.6rem 1.6rem;
+      border: 1px solid var(--gold);
+      color: var(--gold) !important;
+      font-size: 0.7rem !important;
+      letter-spacing: 0.2em !important;
+      transition: background 0.3s, color 0.3s !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--black) !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 28px; height: 1.5px; background: var(--white); transition: all 0.3s; display: block; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+    .mobile-menu {
+      position: fixed; inset: 0; top: 0;
+      background: var(--black);
+      z-index: 999;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 2.5rem;
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.77,0,0.175,1);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ── SECTIONS ── */
+    .page-section {
+      display: none;
+      min-height: 100vh;
+    }
+    .page-section.active { display: block; }
+
+    /* ── HERO ── */
+    #home { display: none; }
+    #home.active { display: block; }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, rgba(10,10,10,0.85) 0%, rgba(59,31,14,0.6) 50%, rgba(10,10,10,0.9) 100%),
+        url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1800&q=80') center/cover no-repeat;
+      transform: scale(1.05);
+      animation: heroZoom 8s ease forwards;
+    }
+    @keyframes heroZoom { from { transform: scale(1.05); } to { transform: scale(1); } }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, transparent 30%, rgba(10,10,10,0.7) 100%);
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 8vw;
+      max-width: 800px;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.5s ease forwards;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      line-height: 0.9;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.8s ease forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+      display: block;
+    }
+    .hero-desc {
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: rgba(245,240,232,0.7);
+      line-height: 1.9;
+      max-width: 420px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 1.1s ease forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 1.2rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 1.4s ease forwards;
+    }
+    .btn-primary {
+      padding: 1rem 2.5rem;
+      background: var(--gold);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      border: none; cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: left 0.5s;
+    }
+    .btn-primary:hover::before { left: 100%; }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(201,168,76,0.35);
+    }
+    .btn-outline {
+      padding: 1rem 2.5rem;
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      border: 1px solid rgba(245,240,232,0.4);
+      cursor: pointer; text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.3s, color 0.3s, background 0.3s;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.6rem; opacity: 0;
+      animation: fadeIn 1s 2s ease forwards;
+    }
+    .hero-scroll span {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: var(--gold);
+      animation: scrollDrop 1.5s ease-in-out infinite;
+    }
+    @keyframes scrollDrop {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 8rem 8vw;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub {
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      line-height: 1.9;
+      color: var(--text-muted);
+      max-width: 560px;
+    }
+    .divider {
+      width: 60px; height: 1px;
+      background: var(--gold);
+      margin: 2rem 0;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--brown);
+      padding: 3rem 8vw;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      border-top: 1px solid rgba(201,168,76,0.2);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+      border-right: 1px solid rgba(201,168,76,0.15);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.6);
+      margin-top: 0.5rem;
+    }
+
+    /* ── FEATURED SERVICES (HOME) ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      margin-top: 4rem;
+      background: rgba(201,168,76,0.1);
+    }
+    .service-card {
+      background: var(--gray);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+      cursor: default;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+      transform-origin: left;
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover { background: var(--gray-light); }
+    .service-icon {
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.03em;
+    }
+    .service-card p {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+    .service-price {
+      margin-top: 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* ── WHY CHOOSE US ── */
+    .why-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .why-image {
+      position: relative;
+    }
+    .why-image img {
+      width: 100%;
+      height: 600px;
+      object-fit: cover;
+      display: block;
+    }
+    .why-image-badge {
+      position: absolute;
+      bottom: -1.5rem; right: -1.5rem;
+      width: 130px; height: 130px;
+      background: var(--gold);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .why-image-badge strong {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--black);
+      font-weight: 700;
+    }
+    .why-image-badge span {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .why-list { list-style: none; margin-top: 2.5rem; }
+    .why-list li {
+      display: flex; gap: 1.2rem;
+      align-items: flex-start;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .why-list li:last-child { border-bottom: none; }
+    .why-icon {
+      width: 42px; height: 42px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+    .why-text strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .why-text span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-wrap {
+      background: var(--brown-dark);
+      padding: 8rem 8vw;
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonials-wrap::before {
+      content: '\201C';
+      font-family: var(--font-display);
+      font-size: 40rem;
+      color: rgba(201,168,76,0.04);
+      position: absolute;
+      top: -10rem; left: -2rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .testimonial-card {
+      background: rgba(245,240,232,0.03);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 2.5rem;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .testimonial-card:hover {
+      border-color: rgba(201,168,76,0.5);
+      transform: translateY(-4px);
+    }
+    .testimonial-stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 1.5rem; letter-spacing: 0.1em; }
+    .testimonial-text {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: rgba(245,240,232,0.85);
+      margin-bottom: 2rem;
+    }
+    .testimonial-author strong {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .testimonial-author span {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      background: var(--gold);
+      padding: 6rem 8vw;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .cta-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: var(--black);
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .cta-text p {
+      font-size: 0.85rem;
+      color: rgba(10,10,10,0.7);
+      letter-spacing: 0.06em;
+    }
+    .btn-dark {
+      padding: 1.1rem 3rem;
+      background: var(--black);
+      color: var(--gold);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      border: none; cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+      transition: background 0.3s, color 0.3s, transform 0.3s;
+    }
+    .btn-dark:hover {
+      background: var(--brown);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* ── SERVICES PAGE ── */
+    .services-page-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .service-full-card {
+      background: var(--gray);
+      display: flex; gap: 2rem;
+      padding: 2.5rem;
+      border-left: 2px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .service-full-card:hover {
+      border-left-color: var(--gold);
+      background: var(--gray-light);
+    }
+    .service-full-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    .service-full-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .service-full-body p {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+    .service-full-body .price-tag {
+      margin-top: 1rem;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* ── PRICING PAGE ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--gray);
+      padding: 3rem 2.5rem;
+      position: relative;
+      border: 1px solid rgba(201,168,76,0.1);
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .pricing-card:hover { transform: translateY(-6px); }
+    .pricing-card.featured {
+      background: var(--brown);
+      border-color: var(--gold);
+      transform: scale(1.03);
+    }
+    .pricing-card.featured:hover { transform: scale(1.03) translateY(-6px); }
+    .pricing-badge {
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.4rem 1.5rem;
+    }
+    .pricing-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .pricing-price {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .pricing-price sup {
+      font-size: 1.5rem;
+      vertical-align: top;
+      margin-top: 0.8rem;
+    }
+    .pricing-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+    .pricing-features {
+      list-style: none;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding-top: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .pricing-features li {
+      display: flex; gap: 0.8rem;
+      align-items: flex-start;
+      font-size: 0.8rem;
+      color: rgba(245,240,232,0.75);
+      padding: 0.6rem 0;
+      letter-spacing: 0.04em;
+    }
+    .pricing-features li i { color: var(--gold); margin-top: 2px; font-size: 0.7rem; }
+
+    /* ── ABOUT PAGE ── */
+    .about-hero {
+      background:
+        linear-gradient(180deg, rgba(10,10,10,0.7) 0%, rgba(59,31,14,0.5) 100%),
+        url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1600&q=80') center/cover no-repeat;
+      padding: 12rem 8vw 6rem;
+      min-height: 60vh;
+      display: flex; align-items: flex-end;
+    }
+    .about-story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-story img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .value-card {
+      background: var(--gray);
+      padding: 2.5rem;
+      border-top: 2px solid var(--gold);
+    }
+    .value-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+    .value-card p {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+
+    /* ── CONTACT PAGE ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 6rem;
+      margin-top: 4rem;
+    }
+    .contact-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .contact-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .contact-item {
+      display: flex; gap: 1.2rem;
+      align-items: flex-start;
+      margin-bottom: 1.8rem;
+    }
+    .contact-item-icon {
+      width: 44px; height: 44px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .contact-item-text strong {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+    .contact-item-text span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .contact-form {
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-group label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--gray);
+      border: 1px solid rgba(201,168,76,0.15);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      padding: 1rem 1.2rem;
+      outline: none;
+      transition: border-color 0.3s;
+      width: 100%;
+      letter-spacing: 0.04em;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(245,240,232,0.25);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--gold);
+    }
+    .form-group textarea { min-height: 150px; resize: vertical; }
+    .form-group select option { background: var(--gray); }
+    .form-success {
+      display: none;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--gold);
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--gold);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      margin-top: 1rem;
+    }
+
+    /* ── FAQ ── */
+    .faq-section { max-width: 800px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      text-align: left;
+      padding: 1.8rem 0;
+      cursor: pointer;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      letter-spacing: 0.02em;
+    }
+    .faq-question i {
+      color: var(--gold);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+    .faq-item.open .faq-question i { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      font-size: 0.82rem;
+      line-height: 1.9;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 1.5rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--brown-dark);
+      padding: 5rem 8vw 2rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+    .footer-brand .logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--gold);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+    }
+    .footer-brand p {
+      font-size: 0.8rem;
+      line-height: 1.9;
+      color: var(--text-muted);
+      max-width: 280px;
+    }
+    .footer-socials {
+      display: flex; gap: 0.8rem;
+      margin-top: 2rem;
+    }
+    .footer-socials a {
+      width: 38px; height: 38px;
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .footer-socials a:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-col h4 {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.8rem; }
+    .footer-col ul li a {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── BACK TO TOP ── */
+    #back-top {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      width: 48px; height: 48px;
+      background: var(--gold);
+      color: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 800;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    #back-top.visible { opacity: 1; pointer-events: all; }
+    #back-top:hover { transform: translateY(-4px); }
+
+    /* ── WHATSAPP BTN ── */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 5.5rem; right: 2rem;
+      width: 48px; height: 48px;
+      background: #25D366;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      z-index: 800;
+      text-decoration: none;
+      transition: transform 0.3s;
+    }
+    .whatsapp-btn:hover { transform: translateY(-4px); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── PAGE HERO BANNER ── */
+    .page-hero {
+      height: 45vh;
+      display: flex; align-items: center;
+      padding: 0 8vw;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(10,10,10,0.8) 0%, rgba(59,31,14,0.5) 100%);
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+    }
+    .page-hero-content { position: relative; z-index: 1; }
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      color: var(--white);
+    }
+    .page-hero h1 em { color: var(--gold); font-style: italic; }
+    .page-hero p {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: rgba(245,240,232,0.6);
+      margin-top: 0.8rem;
+    }
+    .page-hero-breadcrumb {
+      display: flex; gap: 0.8rem; align-items: center;
+      margin-bottom: 1rem;
+    }
+    .page-hero-breadcrumb span {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .page-hero-breadcrumb i { color: rgba(201,168,76,0.4); font-size: 0.5rem; }
+
+    /* ── GOLD LINE ACCENT ── */
+    .gold-line {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-section { grid-template-columns: 1fr; gap: 3rem; }
+      .why-image { max-width: 600px; }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+      .pricing-card.featured { transform: none; }
+      .pricing-card.featured:hover { transform: translateY(-6px); }
+      .about-story { grid-template-columns: 1fr; gap: 3rem; }
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.15); }
+      .stat-item:nth-child(2n) { border-bottom: none; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 5rem 5vw; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .services-grid { grid-template-columns: 1fr; }
+      .services-page-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
+      .cta-section { flex-direction: column; text-align: center; }
+      .form-row { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .hero-content { padding: 0 5vw; }
+      .stats-bar { grid-template-columns: 1fr 1fr; padding: 3rem 5vw; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-logo">B & C</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo" onclick="showPage('home')">Blade <span>& Crown</span></a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')">Home</a></li>
+    <li><a href="#" onclick="showPage('services')">Services</a></li>
+    <li><a href="#" onclick="showPage('pricing')">Pricing</a></li>
+    <li><a href="#" onclick="showPage('about')">About</a></li>
+    <li><a href="#" onclick="showPage('contact')" class="nav-cta">Book Now</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#" onclick="showPage('home');closeMobile()">Home</a>
+  <a href="#" onclick="showPage('services');closeMobile()">Services</a>
+  <a href="#" onclick="showPage('pricing');closeMobile()">Pricing</a>
+  <a href="#" onclick="showPage('about');closeMobile()">About</a>
+  <a href="#" onclick="showPage('contact');closeMobile()">Book Now</a>
+</div>
+
+<!-- =========================================================
+     HOME PAGE
+========================================================= -->
+<div id="home" class="page-section active">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Est. 2015 · Premium Grooming</div>
+      <h1 class="hero-title">
+        Where Every Cut
+        <em>Tells a Story</em>
+      </h1>
+      <p class="hero-desc">
+        Step into a sanctuary of refined masculinity. At Blade & Crown, precision meets craftsmanship — because gentlemen deserve nothing less than extraordinary.
+      </p>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary" onclick="showPage('contact')">Book Your Throne</a>
+        <a href="#" class="btn-outline" onclick="showPage('services')">Explore Services</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-item reveal">
+      <div class="stat-number" data-count="12">0</div>
+      <div class="stat-label">Years of Excellence</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" data-count="8500">0</div>
+      <div class="stat-label">Satisfied Clients</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" data-count="24">0</div>
+      <div class="stat-label">Master Barbers</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-number" data-count="98">0</div>
+      <div class="stat-label">% Client Retention</div>
+    </div>
+  </div>
+
+  <!-- Featured Services -->
+  <section>
+    <div class="section-label reveal">What We Offer</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:2rem;">
+      <div>
+        <h2 class="section-title reveal">The Art of <em>Grooming</em></h2>
+        <div class="divider reveal"></div>
+        <p class="section-sub reveal">Each service is a ritual. From the first consultation to the final flourish, every visit is tailored exclusively for you.</p>
+      </div>
+      <a href="#" class="btn-outline reveal" onclick="showPage('services')" style="flex-shrink:0">View All Services</a>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fas fa-cut"></i></div>
+        <h3>Signature Haircut</h3>
+        <p>A bespoke cut sculpted to your bone structure, lifestyle, and personality. Consultation included with every visit.</p>
+        <div class="service-price">from $45</div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fas fa-fire-alt"></i></div>
+        <h3>Hot Towel Shave</h3>
+        <p>The classic barbershop ritual, elevated. Steamed towels, premium lather, and a straight razor for the smoothest finish.</p>
+        <div class="service-price">from $55</div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fas fa-crown"></i></div>
+        <h3>Beard Sculpting</h3>
+        <p>Shape, define, and refine. Our master barbers craft beard styles that complement your features to perfection.</p>
+        <div class="service-price">from $35</div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fas fa-spa"></i></div>
+        <h3>Scalp Treatment</h3>
+        <p>Nourishing scalp massage and treatment using luxury oils that promote hair health and total relaxation.</p>
+        <div class="service-price">from $40</div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fas fa-gem"></i></div>
+        <h3>Colour & Highlights</h3>
+        <p>Natural-looking colour, grey blending, and bold highlights executed with precision by our colour specialists.</p>
+        <div class="service-price">from $75</div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fas fa-star"></i></div>
+        <h3>The Royal Package</h3>
+        <p>The complete Blade & Crown experience — haircut, hot towel shave, beard sculpt, and scalp ritual in one session.</p>
+        <div class="service-price">from $120</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section style="background:var(--gray);">
+    <div class="why-section">
+      <div class="why-image reveal">
+        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80" alt="Master barber at work"/>
+        <div class="why-image-badge">
+          <strong>12+</strong>
+          <span>Years of Craft</span>
+        </div>
+      </div>
+      <div>
+        <div class="section-label reveal">Why Blade & Crown</div>
+        <h2 class="section-title reveal">Precision. <em>Passion.</em> Prestige.</h2>
+        <div class="divider reveal"></div>
+        <p class="section-sub reveal">We don't just cut hair — we curate an experience. Every element of Blade & Crown is designed to make you feel like royalty.</p>
+        <ul class="why-list">
+          <li class="reveal">
+            <div class="why-icon"><i class="fas fa-medal"></i></div>
+            <div class="why-text">
+              <strong>Master Certified Barbers</strong>
+              <span>Every barber holds international certification with ongoing advanced training in modern techniques.</span>
+            </div>
+          </li>
+          <li class="reveal">
+            <div class="why-icon"><i class="fas fa-leaf"></i></div>
+            <div class="why-text">
+              <strong>Premium Grooming Products</strong>
+              <span>We exclusively use luxury, cruelty-free products — nourishing formulas that protect and enhance your hair.</span>
+            </div>
+          </li>
+          <li class="reveal">
+            <div class="why-icon"><i class="fas fa-clock"></i></div>
+            <div class="why-text">
+              <strong>Punctuality Guaranteed</strong>
+              <span>Your time is precious. Our seamless booking system ensures zero waiting time, every single appointment.</span>
+            </div>
+          </li>
+          <li class="reveal">
+            <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="why-text">
+              <strong>Luxury Hygiene Standards</strong>
+              <span>Sterilized tools, sanitized surfaces, and rigorous cleanliness protocols — every time, without compromise.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <div class="testimonials-wrap">
+    <div class="section-label reveal">Client Voices</div>
+    <h2 class="section-title reveal">What Gentlemen <em>Are Saying</em></h2>
+    <div class="divider reveal"></div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">"I've never felt more confident walking out of a barbershop. The attention to detail is extraordinary — they remembered exactly how I liked my fade from three months prior."</div>
+        <div class="testimonial-author">
+          <strong>James Whitmore</strong>
+          <span>Executive Director · Regular Client</span>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">"The hot towel shave is an experience I now refuse to live without. Pure luxury from start to finish. The ambiance alone is worth the visit — but the results keep me coming back."</div>
+        <div class="testimonial-author">
+          <strong>Marcus Chen</strong>
+          <span>Architect · 5-Year Client</span>
+        </div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-text">"Worth every penny. I get compliments on my beard sculpt every single week. Blade & Crown isn't just a barbershop — it's where professionals go to look their absolute best."</div>
+        <div class="testimonial-author">
+          <strong>Daniel Reyes</strong>
+          <span>Entrepreneur · VIP Member</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-text">
+      <h2>Ready to Claim Your Crown?</h2>
+      <p>Book your appointment today and experience the Blade & Crown difference.</p>
+    </div>
+    <a href="#" class="btn-dark" onclick="showPage('contact')">Reserve Your Seat →</a>
+  </div>
+
+</div><!-- /home -->
+
+<!-- =========================================================
+     SERVICES PAGE
+========================================================= -->
+<div id="services" class="page-section">
+  <div class="page-hero" style="margin-top:0;">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=1600&q=80');"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-breadcrumb">
+        <span>Home</span>
+        <i class="fas fa-chevron-right"></i>
+        <span>Services</span>
+      </div>
+      <h1>Our <em>Services</em></h1>
+      <p>Premium grooming, precisely executed.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label">Full Menu</div>
+    <h2 class="section-title">Every Service, <em>Every Detail</em></h2>
+    <div class="divider"></div>
+    <p class="section-sub">Our complete grooming menu — each treatment designed for the modern gentleman who values quality above all else.</p>
+
+    <div class="services-page-grid">
+      <div class="service-full-card reveal">
+        <div class="service-full-icon"><i class="fas fa-cut"></i></div>
+        <div class="service-full-body">
+          <h3>Signature Haircut</h3>
+          <p>A personalised consultation followed by precision cutting tailored to your face shape, hair texture, and lifestyle. Includes wash, cut, and styling with premium products.</p>
+          <div class="price-tag">$45 – $65</div>
+        </div>
+      </div>
+      <div class="service-full-card reveal">
+        <div class="service-full-icon"><i class="fas fa-fire-alt"></i></div>
+        <div class="service-full-body">
+          <h3>Classic Hot Towel Shave</h3>
+          <p>Pre-shave oil, hot towel preparation, luxury foam, and a perfectly honed straight razor — followed by a cool towel finish and aftershave balm. The definitive shave.</p>
+          <div class="price-tag">$55 – $75</div>
+        </div>
+      </div>
+      <div class="service-full-card reveal">
+        <div class="service-full-icon"><i class="fas fa-crown"></i></div>
+        <div class="service-full-body">
+          <h3>Beard Sculpting & Styling</h3>
+          <p>Full beard shaping, edging, and detailing. We sculpt your beard to enhance your jawline and facial features, then finish with conditioning beard oil and balm.</p>
+          <div class="price-tag">$35 – $50</div>
+        </div>
+      </div>
+      <div class="service-full-card reveal">
+        <div class="service-full-icon"><i class="fas fa-spa"></i></div>
+        <div class="service-full-body">
+          <h3>Scalp & Hair Treatment</h3>
+          <p>A 30-minute scalp massage using nourishing oils combatting dryness, dandruff, and hair loss. Promotes circulation and gives your hair remarkable shine and body.</p>
+          <div class="price-tag">$40 – $60</div>
+        </div>
+      </div>
+      <div class="service-full-card reveal">
+        <div class="service-full-icon"><i class="fas fa-palette"></i></div>
+        <div class="service-full-body">
+          <h3>Colour, Highlights & Grey Blending</h3>
+          <p>Whether you want a bold statement or subtle, natural-looking colour — our specialists blend, highlight, and transform with expert precision using premium colour formulas.</p>
+          <div class="price-tag">$75 – $130</div>
+        </div>
+      </div>
+      <div class="service-full-card reveal">
+        <div class="service-full-icon"><i class="fas fa-child"></i></div>
+        <div class="service-full-body">
+          <h3>Junior Gentleman Cut</h3>
+          <p>Designed for boys aged 5–14. A patient, careful cut in a relaxed environment — helping young gentlemen look their sharpest for school or special occasions.</p>
+          <div class="price-tag">$30 – $40</div>
+        </div>
+      </div>
+      <div class="service-full-card reveal">
+        <div class="service-full-icon"><i class="fas fa-magic"></i></div>
+        <div class="service-full-body">
+          <h3>Perms & Relaxers</h3>
+          <p>Add texture, curl, or smoothness. Our trained technicians assess your hair type before applying any chemical treatment to ensure the best outcome and hair health.</p>
+          <div class="price-tag">$85 – $150</div>
+        </div>
+      </div>
+      <div class="service-full-card reveal">
+        <div class="service-full-icon"><i class="fas fa-star"></i></div>
+        <div class="service-full-body">
+          <h3>The Royal Package</h3>
+          <p>The full Blade & Crown experience: Signature Haircut + Hot Towel Shave + Beard Sculpting + Scalp Ritual. For those who accept nothing less than perfection.</p>
+          <div class="price-tag">$120 – $160</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="background:var(--gray);">
+    <div class="section-label" style="text-align:center;">Got Questions?</div>
+    <h2 class="section-title" style="text-align:center;">Frequently Asked <em>Questions</em></h2>
+    <div class="divider" style="margin:1.5rem auto 3rem;"></div>
+    <div class="faq-section">
+      <div class="faq-item">
+        <button class="faq-question">Do I need to book in advance? <i class="fas fa-plus"></i></button>
+        <div class="faq-answer">While we do accept walk-ins based on availability, we strongly recommend booking in advance to guarantee your preferred barber and time slot. You can book via our contact page or call us directly.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">How long does a typical appointment last? <i class="fas fa-plus"></i></button>
+        <div class="faq-answer">A signature haircut takes approximately 45–60 minutes. A hot towel shave is around 45 minutes. The Royal Package — our full experience — typically runs 2–2.5 hours. We never rush the process.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Which products do you use? <i class="fas fa-plus"></i></button>
+        <div class="faq-answer">We exclusively use premium, cruelty-free grooming products including American Crew, Baxter of California, and Malin+Goetz. All products are available for retail purchase in-shop.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Do you offer gift cards? <i class="fas fa-plus"></i></button>
+        <div class="faq-answer">Yes! Blade & Crown gift cards are available in-shop and online for any value. The perfect gift for any occasion — birthdays, Father's Day, or simply treating someone special.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">What is your cancellation policy? <i class="fas fa-plus"></i></button>
+        <div class="faq-answer">We request at least 24 hours' notice for cancellations. Late cancellations or no-shows may be subject to a 50% service fee. We understand emergencies arise — please contact us as soon as possible.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-section">
+    <div class="cta-text">
+      <h2>Ready to Experience the Difference?</h2>
+      <p>Book your appointment today — your crown awaits.</p>
+    </div>
+    <a href="#" class="btn-dark" onclick="showPage('contact')">Book Now →</a>
+  </div>
+</div><!-- /services -->
+
+<!-- =========================================================
+     PRICING PAGE
+========================================================= -->
+<div id="pricing" class="page-section">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1622288432450-277d0fef9c3c?w=1600&q=80');"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-breadcrumb">
+        <span>Home</span>
+        <i class="fas fa-chevron-right"></i>
+        <span>Pricing</span>
+      </div>
+      <h1>Investment in <em>Excellence</em></h1>
+      <p>Transparent pricing. Extraordinary value.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-label" style="text-align:center;">Our Packages</div>
+    <h2 class="section-title" style="text-align:center;">Choose Your <em>Package</em></h2>
+    <div class="divider" style="margin:1.5rem auto 1rem;"></div>
+    <p class="section-sub" style="text-align:center;margin:0 auto 0;">All packages include a complimentary consultation and styling finish.</p>
+
+    <div class="pricing-grid">
+      <!-- Gentleman -->
+      <div class="pricing-card reveal">
+        <div class="pricing-name">The Gentleman</div>
+        <div class="pricing-price"><sup>$</sup>45</div>
+        <div class="pricing-sub">Per Session</div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> Signature Haircut</li>
+          <li><i class="fas fa-check"></i> Scalp Consultation</li>
+          <li><i class="fas fa-check"></i> Premium Styling Products</li>
+          <li><i class="fas fa-check"></i> Hot Towel Neck Finish</li>
+          <li><i class="fas fa-times" style="color:var(--text-muted)"></i> Hot Towel Shave</li>
+          <li><i class="fas fa-times" style="color:var(--text-muted)"></i> Beard Sculpting</li>
+          <li><i class="fas fa-times" style="color:var(--text-muted)"></i> Scalp Treatment</li>
+        </ul>
+        <a href="#" class="btn-outline" onclick="showPage('contact')" style="width:100%;text-align:center;display:block;">Book Now</a>
+      </div>
+
+      <!-- Distinguished — Featured -->
+      <div class="pricing-card featured reveal">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="pricing-name" style="margin-top:1rem;">The Distinguished</div>
+        <div class="pricing-price"><sup>$</sup>85</div>
+        <div class="pricing-sub">Per Session</div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> Signature Haircut</li>
+          <li><i class="fas fa-check"></i> Scalp Consultation</li>
+          <li><i class="fas fa-check"></i> Premium Styling Products</li>
+          <li><i class="fas fa-check"></i> Hot Towel Neck Finish</li>
+          <li><i class="fas fa-check"></i> Hot Towel Shave</li>
+          <li><i class="fas fa-check"></i> Beard Sculpting</li>
+          <li><i class="fas fa-times" style="color:rgba(245,240,232,0.3)"></i> Scalp Treatment</li>
+        </ul>
+        <a href="#" class="btn-primary" onclick="showPage('contact')" style="width:100%;text-align:center;display:block;">Book Now</a>
+      </div>
+
+      <!-- Royal -->
+      <div class="pricing-card reveal">
+        <div class="pricing-name">The Royal</div>
+        <div class="pricing-price"><sup>$</sup>120</div>
+        <div class="pricing-sub">Per Session</div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check"></i> Signature Haircut</li>
+          <li><i class="fas fa-check"></i> Scalp Consultation</li>
+          <li><i class="fas fa-check"></i> Premium Styling Products</li>
+          <li><i class="fas fa-check"></i> Hot Towel Neck Finish</li>
+          <li><i class="fas fa-check"></i> Hot Towel Shave</li>
+          <li><i class="fas fa-check"></i> Beard Sculpting</li>
+          <li><i class="fas fa-check"></i> Scalp Treatment & Massage</li>
+        </ul>
+        <a href="#" class="btn-outline" onclick="showPage('contact')" style="width:100%;text-align:center;display:block;">Book Now</a>
+      </div>
+    </div>
+
+    <!-- Membership teaser -->
+    <div style="margin-top:5rem;background:var(--brown);padding:3rem;display:flex;gap:3rem;align-items:center;flex-wrap:wrap;" class="reveal">
+      <div>
+        <div class="section-label">Exclusive Offer</div>
+        <h3 style="font-family:var(--font-display);font-size:2rem;color:var(--white);margin-bottom:0.8rem;">Crown Membership</h3>
+        <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.8;max-width:500px;">Become a Blade & Crown member and enjoy unlimited haircuts, 20% off all additional services, priority booking, and complimentary beverages on every visit. Starting at $199/month.</p>
+      </div>
+      <a href="#" class="btn-primary" onclick="showPage('contact')" style="flex-shrink:0;">Enquire About Membership</a>
+    </div>
+  </section>
+</div><!-- /pricing -->
+
+<!-- =========================================================
+     ABOUT PAGE
+========================================================= -->
+<div id="about" class="page-section">
+  <div class="about-hero">
+    <div class="page-hero-content">
+      <div class="page-hero-breadcrumb">
+        <span>Home</span>
+        <i class="fas fa-chevron-right"></i>
+        <span>About</span>
+      </div>
+      <h1>Our <em>Story</em></h1>
+      <p>Born from passion. Built on craft. Defined by excellence.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="about-story">
+      <div>
+        <div class="section-label reveal">Who We Are</div>
+        <h2 class="section-title reveal">A Legacy of <em>Craft</em></h2>
+        <div class="divider reveal"></div>
+        <p style="font-size:0.85rem;line-height:1.9;color:var(--text-muted);margin-bottom:1.5rem;" class="reveal">
+          Blade & Crown was born in 2015 with a single conviction: that every gentleman deserves a grooming experience worthy of his ambitions. Founded by master barber <strong style="color:var(--white);">William Cross</strong>, our shop was designed as a sanctuary — a place where the ancient craft of barbering meets modern luxury.
+        </p>
+        <p style="font-size:0.85rem;line-height:1.9;color:var(--text-muted);margin-bottom:1.5rem;" class="reveal">
+          What began as a two-chair shop in the heart of the city has grown into one of the most respected grooming establishments in the region. Our team of 24 master barbers has collectively trained across London, New York, and Milan — bringing global techniques to every appointment.
+        </p>
+        <p style="font-size:0.85rem;line-height:1.9;color:var(--text-muted);" class="reveal">
+          Today, Blade & Crown holds the trust of executives, athletes, artists, and gentlemen of all walks of life. The name on the door is a promise: when you sit in our chair, you leave as royalty.
+        </p>
+      </div>
+      <div class="reveal">
+        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80" alt="Inside Blade & Crown barbershop"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section style="background:var(--gray);">
+    <div class="section-label" style="text-align:center;" class="reveal">What Drives Us</div>
+    <h2 class="section-title" style="text-align:center;" class="reveal">Our Mission & <em>Values</em></h2>
+    <div class="divider" style="margin:1.5rem auto 3rem;"></div>
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <h3>Our Mission</h3>
+        <p>To deliver an unmatched grooming experience that elevates the confidence and appearance of every gentleman who walks through our doors — through precision, passion, and personalized care.</p>
+      </div>
+      <div class="value-card reveal">
+        <h3>Our Vision</h3>
+        <p>To redefine the modern barbershop as a true sanctuary of masculinity — where tradition, artistry, and luxury converge, setting the global standard for men's grooming excellence.</p>
+      </div>
+      <div class="value-card reveal">
+        <h3>Craftsmanship</h3>
+        <p>We believe great grooming is an art form. Every cut, every shave, every detail is executed with mastery. We invest constantly in training so our standards never plateau.</p>
+      </div>
+      <div class="value-card reveal">
+        <h3>Client Relationship</h3>
+        <p>We remember names, preferences, and stories. Building genuine connections with our clients is what transforms a one-time visitor into a lifelong patron of Blade & Crown.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team strip -->
+  <section>
+    <div class="section-label reveal">The Team</div>
+    <h2 class="section-title reveal">Master <em>Barbers</em></h2>
+    <div class="divider reveal"></div>
+    <p class="section-sub reveal">Every barber at Blade & Crown is rigorously vetted, internationally trained, and deeply passionate about the craft. You're not just in good hands — you're in the best hands.</p>
+    <div style="margin-top:3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:rgba(201,168,76,0.1);" class="reveal">
+      <div style="background:var(--gray);padding:2rem;text-align:center;">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&q=80" alt="William Cross" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);margin-bottom:1rem;"/>
+        <div style="font-family:var(--font-display);font-size:1.1rem;color:var(--white);">William Cross</div>
+        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:0.3rem;">Founder & Lead Barber</div>
+      </div>
+      <div style="background:var(--gray);padding:2rem;text-align:center;">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&q=80" alt="Marcus Allen" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);margin-bottom:1rem;"/>
+        <div style="font-family:var(--font-display);font-size:1.1rem;color:var(--white);">Marcus Allen</div>
+        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:0.3rem;">Master Barber & Colourist</div>
+      </div>
+      <div style="background:var(--gray);padding:2rem;text-align:center;">
+        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&q=80" alt="David Okafor" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);margin-bottom:1rem;"/>
+        <div style="font-family:var(--font-display);font-size:1.1rem;color:var(--white);">David Okafor</div>
+        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:0.3rem;">Beard Specialist</div>
+      </div>
+      <div style="background:var(--gray);padding:2rem;text-align:center;">
+        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&q=80" alt="James Park" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);margin-bottom:1rem;"/>
+        <div style="font-family:var(--font-display);font-size:1.1rem;color:var(--white);">James Park</div>
+        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:0.3rem;">Senior Barber</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-section">
+    <div class="cta-text">
+      <h2>Come Experience the Legend.</h2>
+      <p>Join thousands of satisfied gentlemen who trust Blade & Crown.</p>
+    </div>
+    <a href="#" class="btn-dark" onclick="showPage('contact')">Book Your Appointment →</a>
+  </div>
+</div><!-- /about -->
+
+<!-- =========================================================
+     CONTACT PAGE
+========================================================= -->
+<div id="contact" class="page-section">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1598524374912-73b4b92fae24?w=1600&q=80');"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-breadcrumb">
+        <span>Home</span>
+        <i class="fas fa-chevron-right"></i>
+        <span>Contact</span>
+      </div>
+      <h1>Book Your <em>Appointment</em></h1>
+      <p>We'll respond within 24 hours.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="contact-layout">
+      <!-- Info -->
+      <div>
+        <div class="section-label">Reach Us</div>
+        <h2 class="section-title" style="font-size:2.5rem;">Let's <em>Connect</em></h2>
+        <div class="divider"></div>
+        <p class="section-sub">Fill in the form and one of our team will confirm your booking within 24 hours. For immediate availability, call us directly.</p>
+
+        <div style="margin-top:2.5rem;">
+          <div class="contact-item reveal">
+            <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-item-text">
+              <strong>Email</strong>
+              <span>contactglanders@gmail.com</span>
+            </div>
+          </div>
+          <div class="contact-item reveal">
+            <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+            <div class="contact-item-text">
+              <strong>Phone</strong>
+              <span>+1 (555) 000-0000</span>
+            </div>
+          </div>
+          <div class="contact-item reveal">
+            <div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-item-text">
+              <strong>Location</strong>
+              <span>123 Crown Street, Downtown District</span>
+            </div>
+          </div>
+          <div class="contact-item reveal">
+            <div class="contact-item-icon"><i class="fas fa-clock"></i></div>
+            <div class="contact-item-text">
+              <strong>Hours</strong>
+              <span>Mon – Sat: 9am – 8pm &nbsp;|&nbsp; Sun: 10am – 6pm</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map embed placeholder -->
+        <div style="margin-top:2.5rem;background:var(--gray);height:220px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,0.15);" class="reveal">
+          <div style="text-align:center;color:var(--text-muted);">
+            <i class="fas fa-map-marked-alt" style="font-size:2rem;color:var(--gold);margin-bottom:1rem;display:block;"></i>
+            <span style="font-size:0.75rem;letter-spacing:0.1em;">Embed Google Maps here by replacing this div<br/>with an &lt;iframe&gt; from Google Maps</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="reveal">
+        <div class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" placeholder="John" id="fname"/>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith" id="lname"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="john@example.com" id="email"/>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="+1 (555) 000-0000" id="phone"/>
+          </div>
+          <div class="form-group">
+            <label>Service Interested In</label>
+            <select id="service-select">
+              <option value="">Select a service...</option>
+              <option>Signature Haircut — from $45</option>
+              <option>Hot Towel Shave — from $55</option>
+              <option>Beard Sculpting — from $35</option>
+              <option>Scalp Treatment — from $40</option>
+              <option>Colour & Highlights — from $75</option>
+              <option>The Royal Package — from $120</option>
+              <option>Crown Membership Enquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preferred Date & Time</label>
+            <input type="datetime-local" id="datetime"/>
+          </div>
+          <div class="form-group">
+            <label>Message (Optional)</label>
+            <textarea placeholder="Any special requests or notes for your barber..." id="message"></textarea>
+          </div>
+          <button class="btn-primary" style="width:100%;padding:1.2rem;" onclick="submitForm()">
+            Confirm Booking Request
+          </button>
+          <div class="form-success" id="form-success">
+            <i class="fas fa-crown" style="color:var(--gold);font-size:1.5rem;display:block;margin-bottom:0.8rem;"></i>
+            Your request has been received. We'll confirm your appointment shortly.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /contact -->
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo">Blade & Crown</span>
+      <p>Where precision meets passion. A sanctuary for the modern gentleman who values craftsmanship, luxury, and an extraordinary grooming experience.</p>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('services')">Services</a></li>
+        <li><a onclick="showPage('pricing')">Pricing</a></li>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a onclick="showPage('services')">Signature Haircut</a></li>
+        <li><a onclick="showPage('services')">Hot Towel Shave</a></li>
+        <li><a onclick="showPage('services')">Beard Sculpting</a></li>
+        <li><a onclick="showPage('services')">Scalp Treatment</a></li>
+        <li><a onclick="showPage('services')">The Royal Package</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:contactglanders@gmail.com">contactglanders@gmail.com</a></li>
+        <li><a href="tel:+15550000000">+1 (555) 000-0000</a></li>
+        <li><a>123 Crown Street, Downtown</a></li>
+        <li><a>Mon–Sat: 9am – 8pm</a></li>
+        <li><a>Sun: 10am – 6pm</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Blade & Crown. All rights reserved.</p>
+    <p>Crafted with precision. Designed for gentlemen.</p>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/15550000000" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+<script>
+  /* ── Loader ── */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hidden');
+    }, 2000);
+  });
+
+  /* ── Custom Cursor ── */
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 80);
+  });
+  document.querySelectorAll('a, button, .service-card, .pricing-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    });
+  });
+
+  /* ── Page Navigation ── */
+  function showPage(id) {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(id);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      initReveal();
+      if (id !== 'home') initCounters(); // keep counters only for home
+    }
+  }
+
+  /* ── Sticky Nav ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+    const backTop = document.getElementById('back-top');
+    backTop.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  /* ── Hamburger ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('open');
+  }
+
+  /* ── Scroll Reveal ── */
+  function initReveal() {
+    const revealEls = document.querySelectorAll('.page-section.active .reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+  }
+
+  /* ── Animated Counters ── */
+  function initCounters() {
+    const counters = document.querySelectorAll('[data-count]');
+    counters.forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-count'));
+      const duration = 2000;
+      const step = target / (duration / 16);
+      let current = 0;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          counter.textContent = target.toLocaleString() + (target === 98 ? '%' : '+');
+          clearInterval(timer);
+        } else {
+          counter.textContent = Math.floor(current).toLocaleString();
+        }
+      }, 16);
+    });
+  }
+
+  /* ── FAQ Accordion ── */
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.faq-question');
+    if (btn) {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    }
+  });
+
+  /* ── Contact Form ── */
+  function submitForm() {
+    const fname = document.getElementById('fname').value;
+    const email = document.getElementById('email').value;
+    const service = document.getElementById('service-select').value;
+
+    if (!fname || !email || !service) {
+      alert('Please fill in your name, email, and preferred service.');
+      return;
+    }
+
+    // Mailto fallback
+    const subject = encodeURIComponent('Booking Request — Blade & Crown');
+    const body = encodeURIComponent(
+      `Name: ${document.getElementById('fname').value} ${document.getElementById('lname').value}\n` +
+      `Email: ${email}\n` +
+      `Phone: ${document.getElementById('phone').value}\n` +
+      `Service: ${service}\n` +
+      `Preferred Time: ${document.getElementById('datetime').value}\n` +
+      `Message: ${document.getElementById('message').value}`
+    );
+    window.location.href = `mailto:contactglanders@gmail.com?subject=${subject}&body=${body}`;
+
+    document.getElementById('form-success').style.display = 'block';
+  }
+
+  /* ── Init ── */
+  initReveal();
+
+  // Trigger counters when stats bar is visible
+  const statsBar = document.querySelector('.stats-bar');
+  if (statsBar) {
+    const statsObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        initCounters();
+        statsObs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    statsObs.observe(statsBar);
+  }
+</script>
+</body>
+</html>
